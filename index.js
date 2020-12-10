@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const router = require('./routes/movies');
 const app = express();
 
 
@@ -18,6 +19,7 @@ mongoose.connect(
 
 // Json middleware
 app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 
 // Import Routes
 const moviesRoute = require('./routes/movies');

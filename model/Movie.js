@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const movieSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -21,8 +22,11 @@ const movieSchema = new mongoose.Schema({
         default: Date.now
     },
     starCast: {
-        type: Array
+        type: Array,
+        required: true
     }
 })
+
+
 
 module.exports = mongoose.model('Movie', movieSchema);
