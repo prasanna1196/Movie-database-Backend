@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const router = require('./routes/movies');
 const app = express();
 
 
@@ -23,9 +22,11 @@ app.use(express.urlencoded({extended: false}));
 
 // Import Routes
 const moviesRoute = require('./routes/movies');
+const favoritesRoute = require('./routes/favorites');
 
 // Routes
 app.use('/movies', moviesRoute);
+app.use('/favorites', favoritesRoute);
 
 
 

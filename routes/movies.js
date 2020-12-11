@@ -136,35 +136,7 @@ Object.keys(upMovie.almost).forEach((key) => (upMovie.almost[key] == null) && de
                     res.json(upMovie.almost)
                 })
         })
-        //console.log(upMovie);
-    // })
-    
 
-   
-        
-
-        // const upMovie = new UpdateMovie ({
-        //     name: req.body.name,
-        //     year: req.body.year,
-        //     director: req.body.director,
-        //     starCast: req.body.starCast
-        // })
-        // upMovie.save()
-
-
-    //         console.log(result, up);
-            // Movie.updateOne({name: name}, 
-            //     { $set : {
-            //         upMovie
-            //     } 
-            // })
-            //     .then(result => {
-            //         res.json('Updated')
-            //     })
-    //             .catch(err => {
-    //                 res.json(err)
-    //             })
-    // })
 })
 
 
