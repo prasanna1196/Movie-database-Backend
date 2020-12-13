@@ -3,9 +3,10 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Movie = require('../model/Movie');
 const UpdateMovie = require('../model/UpdateMovie');
+const verify = require('./verifyToken');
 
 // Get all movies
-router.get('/', (req, res) => {
+router.get('/', verify, (req, res) => {
     Movie.find()
         .exec()
         .then(results => {
