@@ -21,6 +21,41 @@ const userSchema = new mongoose.Schema({
     date: {
         type: Date,
         default: Date.now
+    },
+    favorites: {
+        _id: false,
+        type: Array,
+        required: false,
+        favorite : {
+            _id: false,
+            type: Object,
+            required: false,
+            name: {
+                type: String,
+                required: false,
+                min: 1,
+                max: 100
+           },
+           year: {
+               type: Number,
+               required: false
+           },
+           director: {
+               type: String,
+               required: false,
+               min: 1,
+               max: 100
+           },
+           date: {
+               type: Date,
+               default: Date.now
+           },
+           starCast: {
+               type: Array,
+               required: false
+           }
+    
+        }
     }
 
 });

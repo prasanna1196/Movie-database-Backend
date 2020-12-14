@@ -20,7 +20,8 @@ router.get('/', verify, (req, res) => {
                 //        starCast: result.starCast
                 //    })
                                   
-               res.status(200).json(results);
+               res.status(200).json({ movies: results,
+                user: req.user});
                //})
            
         })
