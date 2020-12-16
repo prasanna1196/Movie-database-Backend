@@ -22,17 +22,29 @@ router.post('/', verify, (req, res) => {
 
                     Movie.findOne({ name: mName.name })
                         .then(result => {
-                            if (!result) return res.send('Movie does not exist');
+                            if (!result) return res.json('Movie does not exist');
                             const fav = {favorite: result}
 
-                            
-                            User.findByIdAndUpdate({_id: req.user._id},
-                                { $push :{favorites : result} },
+                            // User.findById(req.user._id)
+                            //     .populate('favorites', '_id')
+                            //         .exec((err, stfu) => {
+                            //             res.json(stfu)
+                            //         })
+                                
+
+
+
+
+
+
+                            // Working code from here............................
+                            User.findByIdAndUpdate(req.user._id,
+                                { $push :{favorites : result._id } },
                                 {useFindAndModify: false})
                                 .then(blah => res.json(blah))
-            //                 res.json(result)
-            //             })
-                })
+                        })
+                            // till here...........................................
+                
         // })
 
 //     Favorite.findOne({ name: mName.name })
@@ -50,30 +62,36 @@ router.post('/', verify, (req, res) => {
 })
 
 // Get favorite movies
-router.get('/', (req, res) => {
-    Favorite.find()
-        .then(results => {
-            if (results.length < 1) return res.send('Nothing here');
+router.get('/', verify, (req, res) => {
+    // Favorite.find()
+    //     .then(results => {
+    //         if (results.length < 1) return res.send('Nothing here');
 
-            res.status(200).json(results);
+    //         res.status(200).json(results);
 
-        })
-        .catch(err => {
-            res.send(err);
-        })
+    //     })
+    //     .catch(err => {
+    //         res.send(err);
+    //     })
+    User.findById(req.user)
+        .then(data => res.json({
+            name: data.name,
+            favorites: data.favorites
+        }))
 
 });
 
 // Delete a movie
-router.delete('/:name', (req, res) => {
-    Favorite.findOne({ name: req.params.name }).
+router.delete('/:name', verify, (req, res) => {
+    Movie.findOne({ name: req.params.name }).
         then(doc => {
             if (!doc) {
                 return res.status(400).send('Movie not found');
             } else {
-                Favorite.deleteOne({ name: req.params.name })
-                    .then(() => res.status(200).json('Deleted'))
-                    .catch(err => res.status(400).json(err))
+                User.findByIdAndUpdate(req.user._id,
+                    { $pull : {favorites: doc._id}},
+                    {new: true, useFindAndModify:false}
+                ).then(data => res.json(data));               
             }
         })
 });
