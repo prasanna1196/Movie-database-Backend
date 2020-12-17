@@ -1,42 +1,39 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
 const Movie = require('../model/Movie');
 const verify = require('./verifyToken');
 const User = require('../model/User');
 
 
-// Add movies to favorites list
+// Add movies to Watchlist
 router.post('/', verify, (req, res) => {
     const movieName = {
         name: req.body.name
     }
-    // User.findById(req.user._id)
-    //     .then(person => {
-    //res.json(person);
-    // person.favorites.findOne({ name: movieName.name })
-    //     .then(data => {
-    //         if (data) return res.send('Movie already exists');
-    //         res.json('empty')
+    // User.findById(req.user)
+    //     .then(user => {
+    //         user.findById({watchlist: req.user._id})
+    //             .then(result => res.json(result))
+    //     })
 
     Movie.findOne({ name: movieName.name })
         .then(movie => {
             if (!movie) return res.json('Movie does not exist');
 
-            User.findOne({ favorites: movie._id, _id: req.user._id })
+            User.findOne({ watchlist: movie._id, _id: req.user._id })
                 .then(present => {
 
-                    if (present) return res.json('Movie already exists in Favorites');
+                    if (present) return res.json('Movie already exists in watchlist');
 
                     // Working code from here............................
                     User.findByIdAndUpdate(req.user._id,
-                        { $push: { favorites: movie._id } },
+                        { $push: { watchlist: movie._id } },
                         { useFindAndModify: false })
-                        .then(() => res.json("Movie added to favorites"))
+                        .then(() => res.json("Movie added to watchlist"))
                 })
             // till here...........................................
-
         })
+
 
     // // Alternate method (Not Recommended..)
     //     Favorite.findOne({ name: movieName.name })
@@ -53,16 +50,16 @@ router.post('/', verify, (req, res) => {
     //         })
 })
 
-// Get favorite movies
+// Get Watchlist
 router.get('/', verify, (req, res) => {
     User.findById(req.user)
-        .populate('favorites')
+        .populate('watchlist')
         .exec((err, user) => {
             if (err) return res.json(err)
             res.json({
                 name: user.name,
                 email: user.email,
-                favorites: user.favorites
+                watchlist: user.watchlist
             });
         })
 });
@@ -75,9 +72,9 @@ router.delete('/:name', verify, (req, res) => {
                 return res.status(400).send('Movie not found');
             } else {
                 User.findByIdAndUpdate(req.user._id,
-                    { $pull: { favorites: movie._id } },
+                    { $pull: { watchlist: movie._id } },
                     { new: true, useFindAndModify: false }
-                ).then(() => res.json("Movie deleted from Favorites"));
+                ).then(() => res.json("Movie deleted from watchlist"));
             }
         })
 });

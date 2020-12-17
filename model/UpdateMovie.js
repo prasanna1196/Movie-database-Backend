@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const UpdateMovieSchema = new mongoose.Schema({
-    almost : {
+    edits : {
         _id: false,
         type: Object,
         required: true,

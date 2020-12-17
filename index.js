@@ -23,11 +23,13 @@ app.use(express.urlencoded({extended: false}));
 // Import Routes
 const moviesRoute = require('./routes/movies');
 const favoritesRoute = require('./routes/favorites');
+const watchlistRoute = require('./routes/watchlist');
 const userRoute = require('./routes/authenticate');
 
 // Routes
 app.use('/movies', moviesRoute);
 app.use('/favorites', favoritesRoute);
+app.use('/watchlist', watchlistRoute);
 app.use('/user', userRoute);
 
 
