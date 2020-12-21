@@ -11,13 +11,6 @@ router.post('/', verify, (req, res) => {
     const movieName = {
         name: req.body.name
     }
-    // User.findById(req.user._id)
-    //     .then(person => {
-    //res.json(person);
-    // person.favorites.findOne({ name: movieName.name })
-    //     .then(data => {
-    //         if (data) return res.send('Movie already exists');
-    //         res.json('empty')
 
     Movie.findOne({ name: movieName.name })
         .then(movie => {
@@ -37,20 +30,6 @@ router.post('/', verify, (req, res) => {
             // till here...........................................
 
         })
-
-    // // Alternate method (Not Recommended..)
-    //     Favorite.findOne({ name: movieName.name })
-    //         .then(data => {
-    //             if (data) return res.send('Movie already exists');
-
-    //             Movie.findOne({ name: movieName.name })
-    //                 .then(result => {
-    //                     if (!result) return res.send('Movie does not exist');
-
-    //                     Favorite.insertMany(result)
-    //                     res.json(result)
-    //                 })
-    //         })
 })
 
 // Get favorite movies

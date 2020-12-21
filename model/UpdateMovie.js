@@ -33,28 +33,5 @@ const UpdateMovieSchema = new mongoose.Schema({
     }
 })
 
-// const UpdateMovieSchema = new mongoose.Schema({
-//     name: {
-//         type: String,
-//         min: 1,
-//         max: 100
-//     },
-//     year: {
-//         type: Number,
-//     },
-//     director: {
-//         type: String,
-//         min: 1,
-//         max: 100
-//     },
-//     date: {
-//         type: Date,
-//         default: Date.now
-//     },
-//     starCast: {
-//         type: Array,
-//         min: 1
-//     }
-// })
 
 module.exports = mongoose.model('UpdateMovie', UpdateMovieSchema);
